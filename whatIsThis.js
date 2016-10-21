@@ -47,7 +47,7 @@ var confusing = {
 */
 
 // Problem 1
- whatIsThis('hello', 'world');
+// whatIsThis('hello', 'world');
 
 // "this" is Window
 
@@ -59,11 +59,11 @@ var confusing = {
 
 
 // * Problem 2
-// window.whatIsThis('hello', 'world');
+ //window.whatIsThis('hello', 'world');
 /*
-- "this" is ...
+- "this" is Window
 
-- because ...
+- because window.whatIsThis is functionally the same as just calling whatIsThis.
 
 */
 
@@ -71,7 +71,7 @@ var confusing = {
 
 
 // * Problem 3
-// inAnObject.test1('face', 'book');
+inAnObject.test1('face', 'book');
 /*
 - "this" is ...
 
