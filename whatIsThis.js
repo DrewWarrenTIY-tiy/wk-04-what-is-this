@@ -71,11 +71,11 @@ var confusing = {
 
 
 // * Problem 3
-inAnObject.test1('face', 'book');
+//inAnObject.test1('face', 'book');
 /*
-- "this" is ...
+- "this" is Object
 
-- because ...
+- because test1 is a method of Object
 
 */
 
@@ -83,11 +83,11 @@ inAnObject.test1('face', 'book');
 
 
 // * Problem 4
-// inAnObject.anotherObject.test1('twitter', 'book');
+//inAnObject.anotherObject.test1('twitter', 'book');
 /*
-- "this" is ...
+- "this" is I received an Error message saying test1 was not a function...
 
-- because ...
+- because ...  I'm assuming it was supposed to point to isAnObject because test1 is a methor od isAnObject
 
 */
 
@@ -95,11 +95,11 @@ inAnObject.test1('face', 'book');
 
 
 // * Problem 5
-// inAnObject.anotherObject.test2('twitter', 'book');
+//inAnObject.anotherObject.test2('twitter', 'book');
 /*
-- "this" is ...
+- "this" is anotherObject
 
-- because ...
+- because test2 is a method of anotherObject
 
 */
 
@@ -109,9 +109,9 @@ inAnObject.test1('face', 'book');
 // * Problem 6
 // whatIsThis.call();
 /*
-- "this" is ...
+- "this" is Window
 
-- because ...
+- because whatIsThis is at a high level, so the only thing containing it is the Window. The call() method calls a function with a given this value and arguments provided individually.. Whatever that means! :D
 
 */
 
@@ -121,9 +121,9 @@ inAnObject.test1('face', 'book');
 // * Problem 7
 // whatIsThis.call(trickyTricky);
 /*
-- "this" is ...
+- "this" is prototype Object with values passed in my trickytricky
 
-- because ...
+- because tricky wasn't called on its own, it was called through whatIsThis. "A different this object can be assigned when calling an existing function. this refers to the current object, the calling object"
 
 */
 
@@ -133,9 +133,9 @@ inAnObject.test1('face', 'book');
 // * Problem 8
 // whatIsThis.call(trickyTricky, 'nice', 'job');
 /*
-- "this" is ...
+- "this" is proto Object with values reassigned by the parameters passed in through the call method.
 
-- because ...
+- because the object is still called through the same method even though the parameters are being changed.
 
 */
 
@@ -143,11 +143,11 @@ inAnObject.test1('face', 'book');
 
 
 // * Problem 9
-// whatIsThis.call(confusing);
+ // whatIsThis.call(confusing);
 /*
-- "this" is ...
+- "this" is proto Object with name value 'confusing'
 
-- because ...
+- because same as trickyTricky so far
 
 */
 
@@ -157,9 +157,9 @@ inAnObject.test1('face', 'book');
 // * Problem 10
 // whatIsThis.call(confusing, 'hello');
 /*
-- "this" is ...
+- "this" is proto Obj with name value confusing
 
-- because ...
+- because the object is still called through the same method even though the parameters are being changed.
 
 */
 
@@ -167,11 +167,11 @@ inAnObject.test1('face', 'book');
 
 
 // * Problem 11
-// whatIsThis.apply(trickyTricky);
+//whatIsThis.apply(trickyTricky);
 /*
-- "this" is ...
+- "this" is proto Object with name value trickyTricky
 
-- because ...
+- because trickyTricky called through whatisthis via the apply method
 
 */
 
@@ -181,9 +181,9 @@ inAnObject.test1('face', 'book');
 // * Problem 12
 // whatIsThis.apply(confusing, ['nice', 'job']);
 /*
-- "this" is ...
+- "this" is proto Obj with name value confusing with params passed as array
 
-- because ...
+- because "The apply() method calls a function with a given this value and arguments provided as an array (or an array-like object).""
 
 */
 
@@ -193,9 +193,9 @@ inAnObject.test1('face', 'book');
 // * Problem 13
 // whatIsThis.apply(confusing, 'nice', 'job');
 /*
-- "this" is ...
+- "this" is I got an error message.
 
-- because ...
+- because because params were passed as strings and not an array of strings.
 
 */
 
@@ -205,9 +205,9 @@ inAnObject.test1('face', 'book');
 // * Problem 14
 // inAFunction('what will', 'happen?');
 /*
-- "this" is ...
+- "this" is Window proto object
 
-- because ...
+- because even though watIsThis is called as a method, it is defined as a global function, so the this still refers to the Window.
 
 */
 
@@ -217,9 +217,9 @@ inAnObject.test1('face', 'book');
 // * Problem 15
 // inAFunction.test3('A', 'B');
 /*
-- "this" is ...
+- "this" is ... I received an error message saying test3 is not a function.
 
-- because ...
+- because ... whatIsThis is not called with any parameters
 
 */
 
@@ -229,9 +229,9 @@ inAnObject.test1('face', 'book');
 // * Problem 16
 // var newObject = new inAFunction('what will', 'happen?');
 /*
-- "this" is ...
+- "this" is proto Window obj.
 
-- because ...
+- because newObject is being treated the same as inAFunction was.
 
 */
 
@@ -242,9 +242,9 @@ inAnObject.test1('face', 'book');
 // var newObject = new inAFunction('what will', 'happen?');
 // newObject.test3('C', 'D');
 /*
-- "this" is ...
+- "this" is first this is proto Window obj, second is obj inAFunction with name value Sally
 
-- because ...
+- because newObject is instantiated with the test3 method as defined on line 24, and passed parameters for the whatIsThis callback.
 
 */
 
@@ -254,9 +254,9 @@ inAnObject.test1('face', 'book');
 // * Problem 18
 // inAnObject.test1.call(trickyTricky, 'face', 'book');
 /*
-- "this" is ...
+- "this" is proto Obj with name value trickyTricky
 
-- because ...
+- because .call is passing tricky Obj into test1 method of inAnObject object.
 
 */
 
@@ -264,10 +264,10 @@ inAnObject.test1('face', 'book');
 
 
 // * Problem 19
-// inAnObject.anotherObject.test2.apply(confusing, ['foo', 'bar']);
+inAnObject.anotherObject.test2.apply(confusing, ['foo', 'bar']);
 /*
-- "this" is ...
+- "this" is proto Obj with name value confusing.
 
-- because ...
+- because apply method is passing confusing obj into the test2 method of anotherObject referenced by inAnObject object.
 
 */
