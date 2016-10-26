@@ -49,9 +49,11 @@ var confusing = {
 // Problem 1
 // whatIsThis('hello', 'world');
 
-// "this" is Window
+// "this" is default location. (Window in browser)
 
 // because as the whatIsThis function is not housed within any other object, the closest element 'above' it that 'this' can refer to is the Window object.
+
+// (because it isn't otherwise specified, therefore uses the default binding, in this case Window)
 
 
 
@@ -61,9 +63,11 @@ var confusing = {
 // * Problem 2
  //window.whatIsThis('hello', 'world');
 /*
-- "this" is Window
+- "this" is Window or not defined
 
 - because window.whatIsThis is functionally the same as just calling whatIsThis.
+
+// (because implicitly bound to 'window' through the call site)
 
 */
 
@@ -77,6 +81,8 @@ var confusing = {
 
 - because test1 is a method of Object
 
+this is inAnObject because implicitly bound to 'inAnObject' through the call site
+
 */
 
 
@@ -87,7 +93,10 @@ var confusing = {
 /*
 - "this" is I received an Error message saying test1 was not a function...
 
-- because ...  I'm assuming it was supposed to point to isAnObject because test1 is a methor od isAnObject
+- because ...  I'm assuming it was supposed to point to isAnObject because test1 is a methor of isAnObject
+
+this is an error because .test1 doesn't exist in 'anotherObject'
+
 
 */
 
@@ -95,11 +104,13 @@ var confusing = {
 
 
 // * Problem 5
-//inAnObject.anotherObject.test2('twitter', 'book');
+// inAnObject.anotherObject.test2('twitter', 'book');
 /*
 - "this" is anotherObject
 
 - because test2 is a method of anotherObject
+
+this is 'anotherObject' because implicitly bound to 'inAnObject.anotherOBject' through the call site.
 
 */
 
@@ -113,6 +124,7 @@ var confusing = {
 
 - because whatIsThis is at a high level, so the only thing containing it is the Window. The call() method calls a function with a given this value and arguments provided individually.. Whatever that means! :D
 
+this is Window or global without an 'a' or 'b' defined because it isn't otherwie specified, therefore uses the default binding, in this case Window; since no 'a' or 'b' parameter, they're undefined
 */
 
 
@@ -124,6 +136,8 @@ var confusing = {
 - "this" is prototype Object with values passed in my trickytricky
 
 - because tricky wasn't called on its own, it was called through whatIsThis. "A different this object can be assigned when calling an existing function. this refers to the current object, the calling object"
+
+this is trickytricky without an 'a' or 'b' defined because trickytricky is passed through .call and therefore hard bound; since no a or b parameter, they're undefined
 
 */
 
@@ -137,6 +151,7 @@ var confusing = {
 
 - because the object is still called through the same method even though the parameters are being changed.
 
+"this" is 'trickyTricky' with an a or b defined through .call parameters beacuse trickytricky and parameters are passed through .call and therefore hard bound
 */
 
 
@@ -148,6 +163,8 @@ var confusing = {
 - "this" is proto Object with name value 'confusing'
 
 - because same as trickyTricky so far
+
+this is confusing without an a or b defined because confusing is passed through .call and therefore hard bound. since no a or b parameters are given, they are undefined
 
 */
 
@@ -161,6 +178,8 @@ var confusing = {
 
 - because the object is still called through the same method even though the parameters are being changed.
 
+this is confusing with a defined and b undefined because confusing and one parameter are passed through .call and therefore hard bound. since no b parameter its undefined
+
 */
 
 
@@ -172,6 +191,8 @@ var confusing = {
 - "this" is proto Object with name value trickyTricky
 
 - because trickyTricky called through whatisthis via the apply method
+
+this is trickytricky without an a or b defined because trickytricky is passed through .apply and therefore hard bound; since no a or b parameter, they're undefined
 
 */
 
@@ -185,6 +206,8 @@ var confusing = {
 
 - because "The apply() method calls a function with a given this value and arguments provided as an array (or an array-like object).""
 
+this is confusing with an a and b defined through .apply parameters because confusing and parameters are passed through .apply and therefore hard bound - even though they are passed as an array (the array is necessary to pass additional parameters through the .apply)
+
 */
 
 
@@ -197,6 +220,8 @@ var confusing = {
 
 - because because params were passed as strings and not an array of strings.
 
+this is an error because .apply requires an array for additional parameters (i.e. everything but the object being bound)
+
 */
 
 
@@ -207,7 +232,9 @@ var confusing = {
 /*
 - "this" is Window proto object
 
-- because even though watIsThis is called as a method, it is defined as a global function, so the this still refers to the Window.
+- because even though whatIsThis is called as a method, it is defined as a global function, so the this still refers to the Window.
+
+this is Window or global because it was implicitly bound to 'window' through its call site
 
 */
 
@@ -221,6 +248,8 @@ var confusing = {
 
 - because ... whatIsThis is not called with any parameters
 
+this is an error because test3 is not a function
+
 */
 
 
@@ -232,6 +261,8 @@ var confusing = {
 - "this" is proto Window obj.
 
 - because newObject is being treated the same as inAFunction was.
+
+this is Window or global because it was default bound to window through its call site. new doesnt apply because the function is simply called within the new function
 
 */
 
@@ -246,6 +277,8 @@ var confusing = {
 
 - because newObject is instantiated with the test3 method as defined on line 24, and passed parameters for the whatIsThis callback.
 
+this is initially Window or global then it's 'inAFunction' because it was initially default bound to 'window' through its call site; then it was bound via an implicit binding to 'inAFunction'
+
 */
 
 
@@ -258,16 +291,20 @@ var confusing = {
 
 - because .call is passing tricky Obj into test1 method of inAnObject object.
 
+this is trickytricky with an a or b defined through .call parameters because trickytricky and parameters are passed through .call and therefore hard bound
+
 */
 
 
 
 
 // * Problem 19
-inAnObject.anotherObject.test2.apply(confusing, ['foo', 'bar']);
+//inAnObject.anotherObject.test2.apply(confusing, ['foo', 'bar']);
 /*
 - "this" is proto Obj with name value confusing.
 
 - because apply method is passing confusing obj into the test2 method of anotherObject referenced by inAnObject object.
+
+this is confusing with an a and b defined through .apply parameters because confusing and parameters are passed through .apply and therefore hard bound even though they are passed as an array
 
 */
